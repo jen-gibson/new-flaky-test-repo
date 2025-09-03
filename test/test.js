@@ -1,23 +1,25 @@
 const { describe, it, expect } = require("@jest/globals");
 
-describe('Flaky Test Suite', () => {
-  it('flaky test 1', () => {
-    expect(Math.random() > 0.5).toBe(true)
-  })
+const { sum } = require('./math');
 
-  it('flaky test 2', () => {
-    expect(Math.random() > 0.7).toBe(true)
-  })
+describe('Deterministic Test Suite', () => {
+  it('adds two numbers correctly', () => {
+    expect(sum(2, 3)).toBe(5);
+  });
 
-  it('flaky test 3', () => {
-    expect(Math.random() > 0.3).toBe(true)
-  })
+  it('handles negative numbers', () => {
+    expect(sum(-1, -1)).toBe(-2);
+  });
 
-  it('flaky test 4', () => {
-    expect(Math.floor(Math.random() * 3)).toBe(1)
-  })
+  it('handles mixed sign numbers', () => {
+    expect(sum(-1, 1)).toBe(0);
+  });
 
-  it('flaky test 5', () => {
-    expect([true, false][Math.floor(Math.random() * 2)]).toBe(true)
-  })
-})
+  it('adds zero properly', () => {
+    expect(sum(0, 5)).toBe(5);
+  });
+
+  it('adds large numbers', () => {
+    expect(sum(1_000_000, 2_000_000)).toBe(3_000_000);
+  });
+});
